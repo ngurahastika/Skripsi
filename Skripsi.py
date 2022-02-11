@@ -265,11 +265,11 @@ class Ui_MainWindow(object):
 
                 self.lineEditAkTrain.setText("{:.3f}".format(np.mean(self.accuracy_rdf_train)))
                 self.lineEditF1Train.setText("{:.3f}".format(np.mean(self.f1Score_rdf_train)))
-                #self.lineEditMAETrain.setText("{:.3f}".format(np.mean(self.MAE_rdf_train)))
+                self.lineEditMAETrain.setText("{:.3f}".format(np.mean(self.MAE_rdf_train)))
 
                 self.lineEditAkTest.setText("{:.3f}".format(np.mean(self.accuracy_rdf_test)))
                 self.lineEditF1Test.setText("{:.3f}".format(np.mean(self.f1Score_rdf_test)))
-                #self.lineEditMAETest.setText("{:.3f}".format(np.mean(self.MAE_rdf_test)))
+                self.lineEditMAETest.setText("{:.3f}".format(np.mean(self.MAE_rdf_test)))
 
             except Exception as e :
                 errBox = QMessageBox()

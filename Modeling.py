@@ -23,22 +23,22 @@ class RandomForest:
         X_train, X_test, y_train, y_test = train_test_split(self.dataX,self.dataY, test_size=0.15, random_state=42)
 
         #Outlier
-        #iso = IsolationForest(random_state=42)
-        #yhat = iso.fit_predict(X_train)
-        #mask = yhat != -1
-        #X_train, y_train = X_train[mask, :], y_train[mask]
+        iso = IsolationForest(random_state=42)
+        yhat = iso.fit_predict(X_train)
+        mask = yhat != -1
+        X_train, y_train = X_train[mask, :], y_train[mask]
 
         #from collections import Counter
-        #counter1 = Counter(y_train)
+        # counter1 = Counter(y_train)
         #print("Data setelah Outlier : ",counter1)
 
         accuracy_train = []
         f1Score_train = []
-        #MAE_train = []
+        MAE_train = []
 
         accuracy_test = []
         f1Score_test = []
-        #MAE_tes = []
+        MAE_tes = []
 
         # Membagi Data dengan K-fold
         kf = KFold(n_splits=self.k_fold)
@@ -54,16 +54,14 @@ class RandomForest:
         # Melakukan Prediksi
             predicted_labels_train = model.predict(x_validasi)
             predicted_labels_test = model.predict(X_test)
-            print(n)
+
         #Menyimpan nilai hasil  ke dalam list
             accuracy_train.append(accuracy_score(y_validasi, predicted_labels_train) * 100)
             f1Score_train.append(f1_score(y_validasi, predicted_labels_train, average='binary') * 100)
-         #   MAE_train.append(mean_absolute_error(y_validasi, predicted_labels_train))
+            MAE_train.append(mean_absolute_error(y_validasi, predicted_labels_train))
 
             accuracy_test.append(accuracy_score(y_test, predicted_labels_test) * 100)
             f1Score_test.append(f1_score(y_test, predicted_labels_test, average='binary') * 100)
-          #  MAE_tes.append(mean_absolute_error(y_test, predicted_labels_test))
+            MAE_tes.append(mean_absolute_error(y_test, predicted_labels_test))
             n +=1
-        return accuracy_train, accuracy_test, f1Score_train, f1Score_test
-
-      #, MAE_train, MAE_tes
+        return accuracy_train, accuracy_test, f1Score_train, f1Score_test, MAE_train, MAE_tes
