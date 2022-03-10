@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Skripsi.ui'
+# Form implementation generated from reading ui file 'SkripsiBaru.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1090, 694)
+        MainWindow.resize(1090, 620)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.dir.setGeometry(QtCore.QRect(10, 130, 341, 20))
         self.dir.setObjectName("dir")
         self.tableViewDataAwal = QtWidgets.QTableView(self.centralwidget)
-        self.tableViewDataAwal.setGeometry(QtCore.QRect(10, 170, 641, 501))
+        self.tableViewDataAwal.setGeometry(QtCore.QRect(10, 170, 641, 421))
         self.tableViewDataAwal.setObjectName("tableViewDataAwal")
         self.groupBoxPengujian = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBoxPengujian.setGeometry(QtCore.QRect(670, 120, 401, 251))
@@ -147,7 +147,7 @@ class Ui_MainWindow(object):
         self.RBTIDAK.setFont(font)
         self.RBTIDAK.setObjectName("RBTIDAK")
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(670, 390, 401, 241))
+        self.groupBox.setGeometry(QtCore.QRect(670, 410, 401, 181))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -179,18 +179,6 @@ class Ui_MainWindow(object):
         self.lineEditF1Test = QtWidgets.QLineEdit(self.groupBox)
         self.lineEditF1Test.setGeometry(QtCore.QRect(240, 130, 113, 20))
         self.lineEditF1Test.setObjectName("lineEditF1Test")
-        self.label_10 = QtWidgets.QLabel(self.groupBox)
-        self.label_10.setGeometry(QtCore.QRect(20, 160, 131, 21))
-        self.label_10.setObjectName("label_10")
-        self.lineEditMAETrain = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEditMAETrain.setGeometry(QtCore.QRect(20, 190, 113, 20))
-        self.lineEditMAETrain.setObjectName("lineEditMAETrain")
-        self.label_11 = QtWidgets.QLabel(self.groupBox)
-        self.label_11.setGeometry(QtCore.QRect(240, 160, 131, 21))
-        self.label_11.setObjectName("label_11")
-        self.lineEditMAETest = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEditMAETest.setGeometry(QtCore.QRect(240, 190, 113, 20))
-        self.lineEditMAETest.setObjectName("lineEditMAETest")
         self.pushButtonBersihkan = QtWidgets.QPushButton(self.centralwidget)
         self.pushButtonBersihkan.setGeometry(QtCore.QRect(460, 130, 91, 23))
         font = QtGui.QFont()
@@ -221,57 +209,52 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
-
     def openFile(self):
-            global dataset, filename
-            filename, _ = QtWidgets.QFileDialog.getOpenFileName()
-            dataset = pd.read_csv(filename)
-            #print(dataset.dtypes)
-            dataset = dataset.astype('int')
-            df = PandasModel(dataset)
-            self.dir.setText(filename)
-            self.tableViewDataAwal.setModel(df)
-
+        global dataset, filename
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName()
+        dataset = pd.read_csv(filename)
+        # print(dataset.dtypes)
+        dataset = dataset.astype('int')
+        df = PandasModel(dataset)
+        self.dir.setText(filename)
+        self.tableViewDataAwal.setModel(df)
 
     def bersihkanTabelDataAwal(self):
-            df = PandasModel()
-            self.tableViewDataAwal.setModel(df)
-            self.dir.clear()
+        df = PandasModel()
+        self.tableViewDataAwal.setModel(df)
+        self.dir.clear()
 
-
- 
     def proses(self):
         if self.dir.text() != "":
             X = dataset.drop(['icu'], axis=1).values
             y = dataset['icu'].values
-            #counter1 = Counter(y)
-            #print("Data Sebelum Balancing:", counter1)
+            # counter1 = Counter(y)
+            # print("Data Sebelum Balancing:", counter1)
 
             try:
 
                 Kf = int(self.lineEditFold.text())
                 tree = int(self.lineEditTree.text())
                 if self.RBYa.isChecked():
-                        sm = SMOTE(sampling_strategy='auto', random_state=42)
-                        X_res, y_res = sm.fit_resample(X, y)
+                    sm = SMOTE(sampling_strategy='auto', random_state=42)
+                    X_res, y_res = sm.fit_resample(X, y)
 
-                        rdf = RandomForest(X_res,y_res,Kf,tree)
-                        self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test,self.MAE_rdf_train,self.MAE_rdf_test = rdf.get_result()
+                    rdf = RandomForest(X_res, y_res, Kf, tree)
+                    self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test = rdf.get_result()
 
                 elif self.RBTIDAK.isChecked():
-                        rdf = RandomForest(X, y, Kf, tree)
-                        self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test,self.MAE_rdf_train,self.MAE_rdf_test  = rdf.get_result()
+                    rdf = RandomForest(X, y, Kf, tree)
+                    self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test = rdf.get_result()
 
                 self.lineEditAkTrain.setText("{:.3f}".format(np.mean(self.accuracy_rdf_train)))
                 self.lineEditF1Train.setText("{:.3f}".format(np.mean(self.f1Score_rdf_train)))
-               # self.lineEditMAETrain.setText("{:.3f}".format(np.mean(self.MAE_rdf_train)))
+
 
                 self.lineEditAkTest.setText("{:.3f}".format(np.mean(self.accuracy_rdf_test)))
                 self.lineEditF1Test.setText("{:.3f}".format(np.mean(self.f1Score_rdf_test)))
-               # self.lineEditMAETest.setText("{:.3f}".format(np.mean(self.MAE_rdf_test)))
 
-            except Exception as e :
+
+            except Exception as e:
                 errBox = QMessageBox()
                 errBox.setWindowTitle('Error')
                 errBox.setText('Error: ' + 'Terjadi Kesalahan Silahkan Cek Kembali!!!')
@@ -307,8 +290,6 @@ class Ui_MainWindow(object):
         self.label_7.setText(_translate("MainWindow", "F1 Score Training"))
         self.label_8.setText(_translate("MainWindow", "Akurasi Testing"))
         self.label_9.setText(_translate("MainWindow", "F1-Score Testing"))
-        self.label_10.setText(_translate("MainWindow", "MAE Training"))
-        self.label_11.setText(_translate("MainWindow", "MAE Testing"))
         self.pushButtonBersihkan.setText(_translate("MainWindow", "Bersihkan"))
         self.label_12.setText(_translate("MainWindow", "185314136"))
 
