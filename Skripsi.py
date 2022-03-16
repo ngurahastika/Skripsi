@@ -10,8 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import pandas as pd
 import numpy as np
-from PandasModel import  PandasModel
-from imblearn.over_sampling import SMOTE
+from PandasModel import PandasModel
+
 from Modeling import RandomForest
 from collections import Counter
 from PyQt5.QtWidgets import *
@@ -19,7 +19,7 @@ from PyQt5.QtWidgets import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1090, 694)
+        MainWindow.resize(1090, 620)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -64,10 +64,10 @@ class Ui_MainWindow(object):
         self.dir.setGeometry(QtCore.QRect(10, 130, 341, 20))
         self.dir.setObjectName("dir")
         self.tableViewDataAwal = QtWidgets.QTableView(self.centralwidget)
-        self.tableViewDataAwal.setGeometry(QtCore.QRect(10, 170, 641, 501))
+        self.tableViewDataAwal.setGeometry(QtCore.QRect(10, 170, 641, 421))
         self.tableViewDataAwal.setObjectName("tableViewDataAwal")
         self.groupBoxPengujian = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBoxPengujian.setGeometry(QtCore.QRect(670, 120, 401, 251))
+        self.groupBoxPengujian.setGeometry(QtCore.QRect(670, 120, 401, 271))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(self.groupBoxPengujian)
-        self.label_4.setGeometry(QtCore.QRect(20, 100, 71, 16))
+        self.label_4.setGeometry(QtCore.QRect(20, 130, 71, 16))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -96,7 +96,7 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(self.groupBoxPengujian)
-        self.label_5.setGeometry(QtCore.QRect(20, 150, 111, 16))
+        self.label_5.setGeometry(QtCore.QRect(20, 170, 111, 16))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -105,7 +105,7 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.PushProses = QtWidgets.QPushButton(self.groupBoxPengujian)
-        self.PushProses.setGeometry(QtCore.QRect(180, 210, 81, 20))
+        self.PushProses.setGeometry(QtCore.QRect(180, 240, 81, 20))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
         self.PushProses.setFont(font)
         self.PushProses.setObjectName("PushProses")
         self.PushBersihProses = QtWidgets.QPushButton(self.groupBoxPengujian)
-        self.PushBersihProses.setGeometry(QtCore.QRect(280, 210, 81, 20))
+        self.PushBersihProses.setGeometry(QtCore.QRect(280, 240, 81, 20))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -123,10 +123,10 @@ class Ui_MainWindow(object):
         self.PushBersihProses.setFont(font)
         self.PushBersihProses.setObjectName("PushBersihProses")
         self.lineEditFold = QtWidgets.QLineEdit(self.groupBoxPengujian)
-        self.lineEditFold.setGeometry(QtCore.QRect(140, 100, 113, 20))
+        self.lineEditFold.setGeometry(QtCore.QRect(140, 130, 113, 20))
         self.lineEditFold.setObjectName("lineEditFold")
         self.lineEditTree = QtWidgets.QLineEdit(self.groupBoxPengujian)
-        self.lineEditTree.setGeometry(QtCore.QRect(140, 150, 113, 20))
+        self.lineEditTree.setGeometry(QtCore.QRect(140, 170, 113, 20))
         self.lineEditTree.setObjectName("lineEditTree")
         self.RBYa = QtWidgets.QRadioButton(self.groupBoxPengujian)
         self.RBYa.setGeometry(QtCore.QRect(140, 50, 41, 17))
@@ -137,6 +137,9 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.RBYa.setFont(font)
         self.RBYa.setObjectName("RBYa")
+        self.Balancing = QtWidgets.QButtonGroup(MainWindow)
+        self.Balancing.setObjectName("Balancing")
+        self.Balancing.addButton(self.RBYa)
         self.RBTIDAK = QtWidgets.QRadioButton(self.groupBoxPengujian)
         self.RBTIDAK.setGeometry(QtCore.QRect(190, 50, 61, 17))
         font = QtGui.QFont()
@@ -146,8 +149,40 @@ class Ui_MainWindow(object):
         font.setWeight(50)
         self.RBTIDAK.setFont(font)
         self.RBTIDAK.setObjectName("RBTIDAK")
+        self.Balancing.addButton(self.RBTIDAK)
+        self.label_10 = QtWidgets.QLabel(self.groupBoxPengujian)
+        self.label_10.setGeometry(QtCore.QRect(20, 90, 111, 16))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.radioButton = QtWidgets.QRadioButton(self.groupBoxPengujian)
+        self.radioButton.setGeometry(QtCore.QRect(140, 90, 82, 17))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.radioButton.setFont(font)
+        self.radioButton.setObjectName("radioButton")
+        self.Outlier = QtWidgets.QButtonGroup(MainWindow)
+        self.Outlier.setObjectName("Outlier")
+        self.Outlier.addButton(self.radioButton)
+        self.rB_2 = QtWidgets.QRadioButton(self.groupBoxPengujian)
+        self.rB_2.setGeometry(QtCore.QRect(190, 90, 82, 17))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.rB_2.setFont(font)
+        self.rB_2.setObjectName("rB_2")
+        self.Outlier.addButton(self.rB_2)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(670, 390, 401, 241))
+        self.groupBox.setGeometry(QtCore.QRect(670, 410, 401, 181))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(12)
@@ -179,18 +214,6 @@ class Ui_MainWindow(object):
         self.lineEditF1Test = QtWidgets.QLineEdit(self.groupBox)
         self.lineEditF1Test.setGeometry(QtCore.QRect(240, 130, 113, 20))
         self.lineEditF1Test.setObjectName("lineEditF1Test")
-        self.label_10 = QtWidgets.QLabel(self.groupBox)
-        self.label_10.setGeometry(QtCore.QRect(20, 160, 131, 21))
-        self.label_10.setObjectName("label_10")
-        self.lineEditMAETrain = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEditMAETrain.setGeometry(QtCore.QRect(20, 190, 113, 20))
-        self.lineEditMAETrain.setObjectName("lineEditMAETrain")
-        self.label_11 = QtWidgets.QLabel(self.groupBox)
-        self.label_11.setGeometry(QtCore.QRect(240, 160, 131, 21))
-        self.label_11.setObjectName("label_11")
-        self.lineEditMAETest = QtWidgets.QLineEdit(self.groupBox)
-        self.lineEditMAETest.setGeometry(QtCore.QRect(240, 190, 113, 20))
-        self.lineEditMAETest.setObjectName("lineEditMAETest")
         self.pushButtonBersihkan = QtWidgets.QPushButton(self.centralwidget)
         self.pushButtonBersihkan.setGeometry(QtCore.QRect(460, 130, 91, 23))
         font = QtGui.QFont()
@@ -213,6 +236,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+
         self.OpenFile.clicked.connect(self.openFile)
         self.pushButtonBersihkan.clicked.connect(self.bersihkanTabelDataAwal)
         self.PushProses.clicked.connect(self.proses)
@@ -221,57 +245,50 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
-
     def openFile(self):
-            global dataset, filename
-            filename, _ = QtWidgets.QFileDialog.getOpenFileName()
-            dataset = pd.read_csv(filename)
-            #print(dataset.dtypes)
-            dataset = dataset.astype('int')
-            df = PandasModel(dataset)
-            self.dir.setText(filename)
-            self.tableViewDataAwal.setModel(df)
-
+        global dataset, filename
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName()
+        dataset = pd.read_csv(filename)
+        # print(dataset.dtypes)
+        dataset = dataset.astype('int')
+        df = PandasModel(dataset)
+        self.dir.setText(filename)
+        self.tableViewDataAwal.setModel(df)
 
     def bersihkanTabelDataAwal(self):
-            df = PandasModel()
-            self.tableViewDataAwal.setModel(df)
-            self.dir.clear()
+        df = PandasModel()
+        self.tableViewDataAwal.setModel(df)
+        self.dir.clear()
 
-
- 
     def proses(self):
         if self.dir.text() != "":
             X = dataset.drop(['icu'], axis=1).values
             y = dataset['icu'].values
-            #counter1 = Counter(y)
-            #print("Data Sebelum Balancing:", counter1)
+            # counter1 = Counter(y)
+            # print("Data Sebelum Balancing:", counter1)
 
             try:
 
                 Kf = int(self.lineEditFold.text())
                 tree = int(self.lineEditTree.text())
-                if self.RBYa.isChecked():
-                        sm = SMOTE(sampling_strategy='auto', random_state=42)
-                        X_res, y_res = sm.fit_resample(X, y)
+                outlier = False
+                if(self.radioButton.isChecked()):
+                    outlier = True
+                balancing = False
+                if (self.RBYa.isChecked()):
+                    balancing = True
 
-                        rdf = RandomForest(X_res,y_res,Kf,tree)
-                        self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test,self.MAE_rdf_train,self.MAE_rdf_test = rdf.get_result()
-
-                elif self.RBTIDAK.isChecked():
-                        rdf = RandomForest(X, y, Kf, tree)
-                        self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test,self.MAE_rdf_train,self.MAE_rdf_test  = rdf.get_result()
+                rdf = RandomForest(X, y, Kf, tree,balancing,outlier)
+                self.accuracy_rdf_train, self.accuracy_rdf_test, self.f1Score_rdf_train, self.f1Score_rdf_test = rdf.get_result()
 
                 self.lineEditAkTrain.setText("{:.3f}".format(np.mean(self.accuracy_rdf_train)))
                 self.lineEditF1Train.setText("{:.3f}".format(np.mean(self.f1Score_rdf_train)))
-               # self.lineEditMAETrain.setText("{:.3f}".format(np.mean(self.MAE_rdf_train)))
 
                 self.lineEditAkTest.setText("{:.3f}".format(np.mean(self.accuracy_rdf_test)))
                 self.lineEditF1Test.setText("{:.3f}".format(np.mean(self.f1Score_rdf_test)))
-               # self.lineEditMAETest.setText("{:.3f}".format(np.mean(self.MAE_rdf_test)))
 
-            except Exception as e :
+
+            except Exception as e:
                 errBox = QMessageBox()
                 errBox.setWindowTitle('Error')
                 errBox.setText('Error: ' + 'Terjadi Kesalahan Silahkan Cek Kembali!!!')
@@ -285,8 +302,6 @@ class Ui_MainWindow(object):
         self.lineEditAkTest.clear()
         self.lineEditAkTrain.clear()
         self.lineEditF1Train.clear()
-        self.lineEditMAETest.clear()
-        self.lineEditMAETrain.clear()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -296,19 +311,20 @@ class Ui_MainWindow(object):
         self.OpenFile.setText(_translate("MainWindow", "Cari File"))
         self.groupBoxPengujian.setTitle(_translate("MainWindow", "Pengujian"))
         self.label_3.setText(_translate("MainWindow", "Balancing :"))
-        self.label_4.setText(_translate("MainWindow", "K- Fold    :"))
+        self.label_4.setText(_translate("MainWindow", "K- Fold :"))
         self.label_5.setText(_translate("MainWindow", "Jumlah Tree :"))
         self.PushProses.setText(_translate("MainWindow", "Proses"))
         self.PushBersihProses.setText(_translate("MainWindow", "Bersihkan"))
         self.RBYa.setText(_translate("MainWindow", "Ya"))
         self.RBTIDAK.setText(_translate("MainWindow", "Tidak"))
+        self.label_10.setText(_translate("MainWindow", "Outliers :"))
+        self.radioButton.setText(_translate("MainWindow", "Ya"))
+        self.rB_2.setText(_translate("MainWindow", "Tidak"))
         self.groupBox.setTitle(_translate("MainWindow", "Hasil Pengujian"))
         self.label_6.setText(_translate("MainWindow", "Akurasi Training"))
         self.label_7.setText(_translate("MainWindow", "F1 Score Training"))
         self.label_8.setText(_translate("MainWindow", "Akurasi Testing"))
         self.label_9.setText(_translate("MainWindow", "F1-Score Testing"))
-        self.label_10.setText(_translate("MainWindow", "MAE Training"))
-        self.label_11.setText(_translate("MainWindow", "MAE Testing"))
         self.pushButtonBersihkan.setText(_translate("MainWindow", "Bersihkan"))
         self.label_12.setText(_translate("MainWindow", "185314136"))
 

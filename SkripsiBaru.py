@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import pandas as pd
 import numpy as np
-from PandasModel import  PandasModel
+from PandasModel import PandasModel
 from imblearn.over_sampling import SMOTE
 from Modeling import RandomForest
 from collections import Counter
@@ -249,7 +249,6 @@ class Ui_MainWindow(object):
                 self.lineEditAkTrain.setText("{:.3f}".format(np.mean(self.accuracy_rdf_train)))
                 self.lineEditF1Train.setText("{:.3f}".format(np.mean(self.f1Score_rdf_train)))
 
-
                 self.lineEditAkTest.setText("{:.3f}".format(np.mean(self.accuracy_rdf_test)))
                 self.lineEditF1Test.setText("{:.3f}".format(np.mean(self.f1Score_rdf_test)))
 
@@ -268,8 +267,6 @@ class Ui_MainWindow(object):
         self.lineEditAkTest.clear()
         self.lineEditAkTrain.clear()
         self.lineEditF1Train.clear()
-        self.lineEditMAETest.clear()
-        self.lineEditMAETrain.clear()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

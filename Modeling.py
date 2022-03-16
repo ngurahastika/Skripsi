@@ -4,16 +4,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import KFold
 from sklearn.ensemble import IsolationForest
+from imblearn.over_sampling import SMOTE
 
 
 class RandomForest:
-    def __init__(self, dataX, dataY, k_fold, tree):
+    def __init__(self, dataX, dataY, k_fold, tree, balancing,outlier):
         self.dataX = dataX
         self.dataY = dataY
         self.k_fold = k_fold
         self.tree = tree
+        self.balancing = balancing
+        self.outlier = outlier
 
     def get_result(self):
+        #balancing
+        if(self.balancing):
+            sm = SMOTE(sampling_strategy='auto', random_state=42)
+            self.dataX, self.dataY = sm.fit_resample(self.dataX, self.dataY)
+
+
         # skala
         sc = MinMaxScaler(feature_range=(0, 1))
         self.dataX = sc.fit_transform(self.dataX)
@@ -22,10 +31,11 @@ class RandomForest:
         X_train, X_test, y_train, y_test = train_test_split(self.dataX, self.dataY, test_size=0.15, shuffle=True, random_state=42)
 
         #Outlier
-        iso = IsolationForest(n_estimators=100, contamination='auto', random_state=42)
-        yhat = iso.fit_predict(X_train)
-        mask = yhat != -1
-        X_train, y_train = X_train[mask, :], y_train[mask]
+        if(self.outlier) :
+            iso = IsolationForest(n_estimators=100, contamination='auto', random_state=42)
+            yhat = iso.fit_predict(X_train)
+            mask = yhat != -1
+            X_train, y_train = X_train[mask, :], y_train[mask]
 
         #from collections import Counter
         # counter1 = Counter(y_train)
@@ -58,7 +68,5 @@ class RandomForest:
             f1Score_train.append(f1_score(y_validasi, predicted_labels_train, average='binary') * 100)
             accuracy_test.append(accuracy_score(y_test, predicted_labels_test) * 100)
             f1Score_test.append(f1_score(y_test, predicted_labels_test, average='binary') * 100)
-
-
 
         return accuracy_train, accuracy_test, f1Score_train, f1Score_test
