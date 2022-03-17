@@ -305,7 +305,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Random Forest"))
         self.label.setText(_translate("MainWindow", "Klasifikasi Pasien Covid-19 yang Membutuhkan ICU Menggunakan Random Forest"))
         self.label_2.setText(_translate("MainWindow", "I Gusti Ngurah Astika Pradnyana Dalem"))
         self.OpenFile.setText(_translate("MainWindow", "Cari File"))
